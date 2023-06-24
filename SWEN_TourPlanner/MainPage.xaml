@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SWEN_TourPlanner.MainPage">
+             x:Class="SWEN_TourPlanner.MainPage"
+             xmlns:viewmodel="clr-namespace:SWEN_TourPlanner.ViewModel"
+             x:DataType="viewmodel:MainViewModel">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -36,12 +38,12 @@
             Grid.ColumnSpan="1">
             
             <HorizontalStackLayout>
-                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="Start" Padding="0,0,220,0" FontSize="Title">Tours</Label>
+                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="Start" FontSize="Title">Tours</Label>
                 <Button Text="+" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
                 <Button Text="-" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
                 <Button Text="..." BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
             </HorizontalStackLayout>
-            <Button Text="Tour 1" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
+            <Button Text="{Binding Text}" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3" Command="{Binding ClickedCommand}"></Button>
             <Button Text="Tour 2" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
             <Button Text="Tour 3" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
         </VerticalStackLayout>
