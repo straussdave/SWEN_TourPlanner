@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SWEN_TourPlanner.MainPage"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:local="clr-namespace:SWEN_TourPlanner"
              xmlns:viewmodel="clr-namespace:SWEN_TourPlanner.ViewModel"
-             x:DataType="viewmodel:MainViewModel">
+             x:DataType="viewmodel:MainViewModel"
+             xmlns:controls="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -52,25 +55,21 @@
             Grid.ColumnSpan="1"
             Grid.Column="1"
             Color="Crimson" />
-        <Label 
-            Grid.Row="1"
-            Grid.ColumnSpan="1"
-            Grid.Column="1"
-            Text="Row 1, Column 1 will be general info area"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
-        <BoxView 
+         <!--here i would use a 3rd party component for the tabs, we could also make it ourselves, or use a grid to display the data -->
+        
+        <ScrollView
             Grid.Row="2"
             Grid.ColumnSpan="1"
-            Grid.Column="1"
-            Color="Blue" />
-        <Label
-            Grid.Row="2"
-            Grid.ColumnSpan="1"
-            Grid.Column="1"
-            Text="Row 2, Column 1 will be tour log area"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
+            Grid.Column="1">
+            <!-- https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DataGrid -->
+            <controls:DataGrid 
+                Grid.Row="2"
+                Grid.ColumnSpan="1"
+                Grid.Column="1"
+                ItemsSource="{Binding Items}" UseAutoColumns="True" Margin="5"
+                HorizontalOptions="Center" />
+        </ScrollView>
+        
     </Grid>
 
 </ContentPage>

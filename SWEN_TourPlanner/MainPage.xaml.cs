@@ -4,7 +4,7 @@ namespace SWEN_TourPlanner;
 
 public partial class MainPage : ContentPage
 {
-	public MainPage()
+    public MainPage()
 	{
 		InitializeComponent();
 		BindingContext = new MainViewModel();
