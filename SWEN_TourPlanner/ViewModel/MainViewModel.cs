@@ -12,6 +12,8 @@ namespace SWEN_TourPlanner.ViewModel
         [ObservableProperty] //this auto generates code in Dependencies/net7.0-windows/CommunityToolkin.Mvvm.SourceGenerators/CoomunityToolkit.MvvmSourceGenerators.ObservablePropertyGenerator
         string text;
 
+        DatabaseHandler dbHandler = new DatabaseHandler();
+
         [RelayCommand]
         void Clicked()
         {
