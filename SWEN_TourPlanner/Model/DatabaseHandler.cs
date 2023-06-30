@@ -3,7 +3,10 @@ using System.Data.Common;
 using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
+using SWEN_TourPlanner;
 
 public class DatabaseHandler
 {
@@ -17,13 +20,10 @@ public class DatabaseHandler
     /// <returns>returns connection string as string</returns>
     static public string GetConnectionString() //change to get data from config file, I could not make it work, so I use txt file as temporary solution
     {
-        var fileStream = new FileStream(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../../dbconfig.txt"), FileMode.Open, FileAccess.Read); //should also implement this base dir in config file
         string cs;
+        var configuration = MauiProgram.Services.GetService<IConfiguration>();
 
-        using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-        {
-            cs = streamReader.ReadToEnd();
-        }
+        cs = configuration.GetConnectionString("cs");
 
         return cs;
     }
