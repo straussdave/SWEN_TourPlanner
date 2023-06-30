@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace SWEN_TourPlanner.Model
 {
-    public class Tour
+    internal class Tour
     {
         public int Id { get; set; }
         public string Name { get; set; }
