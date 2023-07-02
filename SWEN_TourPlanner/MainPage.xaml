@@ -7,69 +7,99 @@
              xmlns:viewmodel="clr-namespace:SWEN_TourPlanner.ViewModel"
              x:DataType="viewmodel:MainViewModel"
              xmlns:controls="clr-namespace:UraniumUI.Material.Controls;assembly=UraniumUI.Material">
-
-    <Grid>
+    <Grid BackgroundColor="WhiteSmoke">
         <Grid.RowDefinitions>
-            <RowDefinition Height=".1*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width=".5*" />
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
 
+        <!-- Row 0 -->
+        <StackLayout Orientation="Horizontal" Grid.Row="0">
+            <!-- Left buttons -->
+            <Button Text="File" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderWidth="2" BorderColor="DarkGray" CornerRadius="3" WidthRequest="200" Margin="2" />
+            <Button Text="Edit" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderWidth="2" BorderColor="DarkGray" CornerRadius="3" WidthRequest="200" Margin="2" />
+            <Button Text="Options" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderWidth="2" BorderColor="DarkGray" CornerRadius="3" WidthRequest="200" Margin="2" />
+            <!-- Right button -->
+            <Button Text="Help" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderWidth="2" BorderColor="DarkGray" CornerRadius="3" WidthRequest="200" Margin="2" HorizontalOptions="EndAndExpand" />
+        </StackLayout>
 
-        <BoxView 
-            Grid.Row="0"
-            Grid.ColumnSpan="2"
-            Color="whitesmoke" />
-        <Label 
-            Grid.Row="0"
-            Grid.ColumnSpan="2"
-            Text="Row 0, Columns 0 and 1 will be search field (if implemented)"
-            HorizontalOptions="Center"
-            VerticalOptions="Center" />
-        <BoxView 
-            Grid.RowSpan="2"
-            Grid.Row="1"
-            Grid.ColumnSpan="1"
-            Color="WhiteSmoke" />
-        <VerticalStackLayout 
-            Grid.RowSpan="2"
-            Grid.Row="1"
-            Grid.ColumnSpan="1">
-            
-            <HorizontalStackLayout>
-                <Label VerticalTextAlignment="Center" HorizontalTextAlignment="Center" HorizontalOptions="Start" FontSize="Title">Tours</Label>
-                <Button Text="+" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
-                <Button Text="-" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
-                <Button Text="..." BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
-            </HorizontalStackLayout>
-            <Button Text="{Binding Text}" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3" Command="{Binding ClickedCommand}"></Button>
-            <Button Text="Tour 2" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
-            <Button Text="Tour 3" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3"></Button>
-        </VerticalStackLayout>
-        <BoxView 
-            Grid.Row="1"
-            Grid.ColumnSpan="1"
-            Grid.Column="1"
-            Color="Crimson" />
-         <!--here i would use a 3rd party component for the tabs, we could also make it ourselves, or use a grid to display the data -->
-        
-        <ScrollView
-            Grid.Row="2"
-            Grid.ColumnSpan="1"
-            Grid.Column="1">
-            <!-- https://enisn-projects.io/docs/en/uranium/latest/themes/material/components/DataGrid -->
-            <controls:DataGrid 
-                Grid.Row="2"
-                Grid.ColumnSpan="1"
-                Grid.Column="1"
-                ItemsSource="{Binding Items}" UseAutoColumns="True" Margin="5"
-                HorizontalOptions="Center" />
-        </ScrollView>
-        
+        <!-- Row 1 -->
+        <SearchBar Grid.Row="1" Placeholder="Search" FontSize="Title" TextColor="Black" BackgroundColor="WhiteSmoke" HorizontalOptions="FillAndExpand" />
+
+        <!-- Row 2 -->
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="30*" />
+                <ColumnDefinition Width="70*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Nested Grid Row 0 Column 0 -->
+            <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+                <!-- Left label -->
+                <Label Text="Tours" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Title" Margin="10,0,0,0"/>
+
+                <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                    <!-- Right buttons -->
+                    <Button Text="+" FontSize="Title" TextColor="Black" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3" WidthRequest="55" />
+                    <Button Text="-" FontSize="Title" TextColor="Black" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3" WidthRequest="55" />
+                    <Button Text="..." FontSize="Title" TextColor="Black" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3,3,10,3" WidthRequest="55" />
+                </StackLayout>
+            </StackLayout>
+
+            <!-- Nested Grid Row 0 Column 1 -->
+            <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                <!-- Left buttons -->
+                <Button Text="General" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderColor="DarkGray" BorderWidth="2" CornerRadius="3" Margin="10,3,3,3" />
+                <Button Text="Route" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderColor="DarkGray" BorderWidth="2" CornerRadius="3" Margin="3" />
+                <Button Text="Misc" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderColor="DarkGray" BorderWidth="2" CornerRadius="3" Margin="3" />
+            </StackLayout>
+
+            <!-- Nested Grid Row 1 Column 0 -->
+            <StackLayout Orientation="Vertical" Grid.Row="1" Grid.Column="0">
+                <Button Text="Tour 1" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderColor="DarkGray" BorderWidth="2" CornerRadius="3" Margin="10,10,10,0" />
+                <Button Text="Tour 2" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderColor="DarkGray" BorderWidth="2" CornerRadius="3" Margin="10,10,10,0" />
+                <Button Text="Tour 3" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderColor="DarkGray" BorderWidth="2" CornerRadius="3" Margin="10,10,10,0" />
+                <Button Text="Tour 4" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderColor="DarkGray" BorderWidth="2" CornerRadius="3" Margin="10,10,10,0" />
+                <Button Text="Tour 5" FontSize="Title" TextColor="Black" BackgroundColor="LightGray" BorderColor="DarkGray" BorderWidth="2" CornerRadius="3" Margin="10,10,10,0" />
+            </StackLayout>
+
+            <!-- Nested Grid Row 1 Column 1 -->
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="45*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="45*" />
+                </Grid.RowDefinitions>
+
+                <!-- Nested nested Grid Row 0 -->
+                <BoxView Grid.Row="0" Color="LightBlue" CornerRadius="3" HeightRequest="200" Margin="10" />
+
+                <!-- Nested nested Grid Row 1 -->
+                <StackLayout Orientation="Horizontal" Grid.Row="1">
+                    <!-- Left label -->
+                    <Label Text="Tour Logs" TextColor="Black" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontSize="Title" Margin="10,0,0,0" />
+
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand">
+                        <!-- Right buttons -->
+                        <Button Text="+" FontSize="Title" TextColor="Black" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3" WidthRequest="55" />
+                        <Button Text="-" FontSize="Title" TextColor="Black" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3" WidthRequest="55" />
+                        <Button Text="..." FontSize="Title" TextColor="Black" BackgroundColor="LightGrey" BorderColor="DarkGrey" BorderWidth="2" CornerRadius="3" Margin="3" WidthRequest="55" />
+                    </StackLayout>
+                </StackLayout>
+
+                <!-- Nested nested Grid Row 2 -->
+                <BoxView Grid.Row="2" Color="LightGreen" CornerRadius="3" HeightRequest="200" Margin="10" />
+
+            </Grid>
+
+        </Grid>
+
     </Grid>
 
 </ContentPage>
