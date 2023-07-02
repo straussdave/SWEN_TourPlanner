@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-
+﻿
 namespace SWEN_TourPlanner.Model
 {
-    internal class Tour
+    public partial class Tour
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string From { get; set; }
-        public string To { get; set; }
-        public string transportType { get; set; }
-        public string tourDistance { get; set; }
-        public string estimatedTime { get; set; }
-        public string routeImagePath { get; set; }
+
+        public string? Name { get; set; }
+
+        public string? Description { get; set; }
+
+        public string? FromLocation { get; set; }
+
+        public string? ToLocation { get; set; }
+
+        public string? TransportType { get; set; }
+
+        public int? TourDistance { get; set; }
+
+        public int? EstimatedTime { get; set; }
+
+        public string? RouteImage { get; set; }
+
+        public virtual ICollection<Log> Logs { get; set; } = new List<Log>();
     }
 }

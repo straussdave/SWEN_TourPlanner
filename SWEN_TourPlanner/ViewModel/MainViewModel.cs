@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SWEN_TourPlanner.Model;
+using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Windows.Input;
@@ -11,8 +13,8 @@ namespace SWEN_TourPlanner.ViewModel
         int counter;
         [ObservableProperty] //this auto generates code in Dependencies/net7.0-windows/CommunityToolkin.Mvvm.SourceGenerators/CoomunityToolkit.MvvmSourceGenerators.ObservablePropertyGenerator
         string text;
-
-        DatabaseHandler dbHandler = new DatabaseHandler();
+        
+        DatabaseHandler handler = new();
 
         [RelayCommand]
         void Clicked()

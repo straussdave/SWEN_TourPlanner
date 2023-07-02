@@ -1,31 +1,75 @@
-﻿using System;
-using System.Data.Common;
+﻿
+using System;
 using System.Diagnostics;
-using System.Text;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using SWEN_TourPlanner;
+using SWEN_TourPlanner.Model;
 
 public class DatabaseHandler
 {
-    private static string connectionString = GetConnectionString();
-    NpgsqlConnection connection = new NpgsqlConnection(connectionString);
+    private readonly TourPlannerDbContext _context;
 
+    public DatabaseHandler()
+    {
+        _context = new TourPlannerDbContext();
+
+        if (!_context.Tours.Any())
+        {
+            _context.Tours.AddRange(
+                new Tour
+                {
+                    Id = 1,
+                    Name = "Tour 1",
+                    Description = "Description of Tour 1",
+                    FromLocation = "Location A",
+                    ToLocation = "Location B",
+                    TransportType = "Car",
+                    TourDistance = 100,
+                    EstimatedTime = 120,
+                    RouteImage = "route_1.jpg"
+                },
+                new Tour
+                {
+                    Id = 2,
+                    Name = "Tour 2",
+                    Description = "Description of Tour 2",
+                    FromLocation = "Location X",
+                    ToLocation = "Location Y",
+                    TransportType = "Bike",
+                    TourDistance = 80,
+                    EstimatedTime = 90,
+                    RouteImage = "route_2.jpg"
+                }
+            // Add more sample data as needed
+            );
+
+            _context.SaveChanges();
+        }
+    }
+
+    /*
+    /// <summary>
+    /// ORM Tour Table
+    /// </summary>
+    public DbSet<Tour> Tours { get; set; }
 
     /// <summary>
-    /// Reads the connection string from txt file (change to config file!)
+    /// ORM Log Table 
+    /// </summary>
+    public DbSet<Log> Logs { get; set; }
+
+    /// <summary>
+    /// Reads the connection string from config file
     /// </summary>
     /// <returns>returns connection string as string</returns>
-    static public string GetConnectionString() //change to get data from config file, I could not make it work, so I use txt file as temporary solution
+    static public string GetConnectionString() 
     {
-        string cs;
-        var configuration = MauiProgram.Services.GetService<IConfiguration>();
-
-        cs = configuration.GetConnectionString("cs");
-
-        return cs;
+        return MauiProgram.Services.GetService<IConfiguration>().GetConnectionString("cs");
     }
 
     /// <summary>
@@ -254,5 +298,6 @@ public class DatabaseHandler
     {
         // Replace invalid characters with empty strings.
         return Regex.Replace(strIn, @"[^\w\.@-]", "");
-    }
+    } 
+    */
 }

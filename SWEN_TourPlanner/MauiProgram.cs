@@ -1,6 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using SWEN_TourPlanner.Model;
 using SWEN_TourPlanner.ViewModel;
+using System.Diagnostics;
 using System.Reflection;
 
 namespace SWEN_TourPlanner;
@@ -17,19 +20,10 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
+
         builder.Services.AddSingleton<MainPage>();
-		builder.Services.AddSingleton<MainViewModel>();
-
-        var a = Assembly.GetExecutingAssembly();
-        using var stream = a.GetManifestResourceStream("SWEN_TourPlanner.appsettings.json");
-
-        var config = new ConfigurationBuilder()
-                    .AddJsonStream(stream)
-                    .Build();
-
-
-        builder.Configuration.AddConfiguration(config);
-        builder.Services.AddTransient<MainPage>();
+		builder.Services.AddSingleton<MainViewModel>();	
+        
 
 #if DEBUG
         builder.Logging.AddDebug();

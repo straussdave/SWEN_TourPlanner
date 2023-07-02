@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SWEN_TourPlanner.Model
 {
-    internal class Log
+    public partial class Log
     {
-        public int id {  get; set; }
-        public int tourId { get; set; }
-        public string tourDate { get; set; }
-        public string comment { get; set; }
-        public int difficulty { get; set; }
-        public int totalTime { get; set; }
-        public int rating { get; set; }
+        public int Id { get; set; }
+
+        public int? TourId { get; set; }
+
+        public DateTime? TourDate { get; set; }
+
+        public string? Comment { get; set; } 
+
+        public int? Difficulty { get; set; }
+
+        public int? TotalTime { get; set; }
+
+        public int? Rating { get; set; }
+
+        public virtual Tour? Tour { get; set; }
     }
 }
