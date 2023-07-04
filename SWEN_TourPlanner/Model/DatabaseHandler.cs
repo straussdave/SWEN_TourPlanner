@@ -14,6 +14,8 @@ public class DatabaseHandler
 {
     private readonly TourPlannerDbContext _context;
 
+    MapHandler maphandler = new MapHandler();
+
     public DatabaseHandler()
     {
         _context = new TourPlannerDbContext();
@@ -50,6 +52,7 @@ public class DatabaseHandler
 
             _context.SaveChanges();
         }
+
     }
 
     /*

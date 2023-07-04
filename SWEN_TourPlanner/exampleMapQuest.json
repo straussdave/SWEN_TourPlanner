@@ -1,0 +1,402 @@
+{
+  "route": {
+    "sessionId": "AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car",
+    "realTime": 3268,
+    "distance": 40.7508,
+    "time": 2742,
+    "formattedTime": "00:45:42",
+    "hasHighway": true,
+    "hasTollRoad": true,
+    "hasBridge": true,
+    "hasSeasonalClosure": false,
+    "hasTunnel": false,
+    "hasFerry": false,
+    "hasUnpaved": false,
+    "hasTimedRestriction": false,
+    "hasCountryCross": false,
+    "legs": [
+      {
+        "index": 0,
+        "hasTollRoad": true,
+        "hasHighway": true,
+        "hasBridge": true,
+        "hasUnpaved": false,
+        "hasTunnel": false,
+        "hasSeasonalClosure": false,
+        "hasFerry": false,
+        "hasCountryCross": false,
+        "hasTimedRestriction": false,
+        "distance": 40.7508,
+        "time": 3268,
+        "formattedTime": "00:54:28",
+        "origIndex": 0,
+        "origNarrative": "",
+        "destIndex": 0,
+        "destNarrative": "",
+        "maneuvers": [
+          {
+            "index": 0,
+            "distance": 0.0199,
+            "narrative": "Head toward Bernstein-Radweg on Opernpassage. Go for 105 ft.",
+            "time": 14,
+            "direction": 7,
+            "directionName": "West",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:00:14",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.202631,
+              "lng": 16.36842
+            },
+            "turnType": 0,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": [
+              "Opernpassage",
+              "Opernring"
+            ],
+            "mapUrl": "https://www.mapquestapi.com/staticmap/v5/map?key=Cmjtd|luur2108n1,7w=o5-gz8a&size=225,160&locations=48.202631,16.36842|marker-1||48.20272,16.36801|marker-2||�er=48.2026755,16.368215&defaultMarker=none&zoom=16&session=AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car"
+          },
+          {
+            "index": 1,
+            "distance": 0.1038,
+            "narrative": "Turn left onto Operngasse. Go for 0.1 mi.",
+            "time": 25,
+            "direction": 6,
+            "directionName": "Southwest",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:00:25",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.20272,
+              "lng": 16.36801
+            },
+            "turnType": 6,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": [
+              "Operngasse",
+              "Albertinapassage"
+            ],
+            "mapUrl": "https://www.mapquestapi.com/staticmap/v5/map?key=Cmjtd|luur2108n1,7w=o5-gz8a&size=225,160&locations=48.20272,16.36801|marker-2||48.201299999999996,16.36728|marker-3||�er=48.20201,16.367645000000003&defaultMarker=none&zoom=16&session=AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car"
+          },
+          {
+            "index": 2,
+            "distance": 1.6802,
+            "narrative": "Keep right onto Friedrichstra�e. Go for 1.7 mi.",
+            "time": 398,
+            "direction": 6,
+            "directionName": "Southwest",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:06:38",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.201299999999996,
+              "lng": 16.36728
+            },
+            "turnType": 16,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": [
+              "Friedrichstra�e",
+              "Operngasse",
+              "B1",
+              "Wiener Bundesstra�e",
+              "Linke Wienzeile",
+              "Naschmarkt",
+              "Wiental-Radweg"
+            ],
+            "mapUrl": "https://www.mapquestapi.com/staticmap/v5/map?key=Cmjtd|luur2108n1,7w=o5-gz8a&size=225,160&locations=48.201299999999996,16.36728|marker-3||48.18866999999998,16.34033999999999|marker-4||�er=48.19498499999999,16.353809999999996&defaultMarker=none&zoom=12&session=AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car"
+          },
+          {
+            "index": 3,
+            "distance": 0.709,
+            "narrative": "Keep left onto Linke Wienzeile (B1) toward Linz/A1/Sch�nbrunn. Go for 0.7 mi.",
+            "time": 149,
+            "direction": 7,
+            "directionName": "West",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:02:29",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.18866999999998,
+              "lng": 16.34033999999999
+            },
+            "turnType": 17,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": [
+              "B1",
+              "Linke Wienzeile",
+              "Wiener Bundesstra�e",
+              "Wiental-Radweg"
+            ],
+            "mapUrl": "https://www.mapquestapi.com/staticmap/v5/map?key=Cmjtd|luur2108n1,7w=o5-gz8a&size=225,160&locations=48.18866999999998,16.34033999999999|marker-4||48.18399999999997,16.32793999999999|marker-5||�er=48.18633499999997,16.33413999999999&defaultMarker=none&zoom=13&session=AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car"
+          },
+          {
+            "index": 4,
+            "distance": 4.7473,
+            "narrative": "Keep right onto Linke Wienzeile (B1) toward Linz/A1/Sch�nbrunn. Go for 4.7 mi.",
+            "time": 726,
+            "direction": 7,
+            "directionName": "West",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:12:06",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.18399999999997,
+              "lng": 16.32793999999999
+            },
+            "turnType": 16,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": [
+              "B1",
+              "Linke Wienzeile",
+              "Wiener Bundesstra�e",
+              "Wiental-Radweg",
+              "Hadikgasse",
+              "Nikolaibr�cke",
+              "Nikolaihochstra�e",
+              "Wientalstra�e"
+            ],
+            "mapUrl": "https://www.mapquestapi.com/staticmap/v5/map?key=Cmjtd|luur2108n1,7w=o5-gz8a&size=225,160&locations=48.18399999999997,16.32793999999999|marker-5||48.203250000000004,16.232430000000004|marker-6||�er=48.19362499999998,16.280184999999996&defaultMarker=none&zoom=10&session=AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car"
+          },
+          {
+            "index": 5,
+            "distance": 31.0766,
+            "narrative": "Keep left onto A1 (West Autobahn) toward Linz/St. P�lten/Pressbaum. Go for 31.1 mi.",
+            "time": 1602,
+            "direction": 7,
+            "directionName": "West",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:26:42",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.203250000000004,
+              "lng": 16.232430000000004
+            },
+            "turnType": 17,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": [
+              "A1",
+              "West Autobahn",
+              "Tal�bergang Wolfsgraben",
+              "Tal�bergang Brentenmais",
+              "Tal�bergang Pfalzau",
+              "Tal�bergang Gro�ram",
+              "E60"
+            ],
+            "mapUrl": "https://www.mapquestapi.com/staticmap/v5/map?key=Cmjtd|luur2108n1,7w=o5-gz8a&size=225,160&locations=48.203250000000004,16.232430000000004|marker-6||48.17713000000001,15.615100000000087|marker-7||�er=48.19019000000001,15.923765000000046&defaultMarker=none&zoom=8&session=AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car"
+          },
+          {
+            "index": 6,
+            "distance": 0.3467,
+            "narrative": "Take exit 59 toward Zentrum. Go for 0.3 mi.",
+            "time": 62,
+            "direction": 3,
+            "directionName": "Northeast",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:01:02",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.17713000000001,
+              "lng": 15.615100000000087
+            },
+            "turnType": 14,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": [
+              "Anschlussstelle Sankt P�lten S�d"
+            ],
+            "mapUrl": "https://www.mapquestapi.com/staticmap/v5/map?key=Cmjtd|luur2108n1,7w=o5-gz8a&size=225,160&locations=48.17713000000001,15.615100000000087|marker-7||48.17842,15.61601000000009|marker-8||�er=48.17777500000001,15.61555500000009&defaultMarker=none&zoom=16&session=AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car"
+          },
+          {
+            "index": 7,
+            "distance": 1.6013,
+            "narrative": "Turn left onto Mariazeller Stra�e (B20) toward St. P�lten/Zentrum/Krems. Go for 1.6 mi.",
+            "time": 225,
+            "direction": 1,
+            "directionName": "North",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:03:45",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.17842,
+              "lng": 15.61601000000009
+            },
+            "turnType": 6,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": [
+              "B20",
+              "Mariazeller Stra�e",
+              "Mariazeller Bundesstra�e"
+            ],
+            "mapUrl": "https://www.mapquestapi.com/staticmap/v5/map?key=Cmjtd|luur2108n1,7w=o5-gz8a&size=225,160&locations=48.17842,15.61601000000009|marker-8||48.200990000000004,15.620220000000087|marker-9||�er=48.189705000000004,15.618115000000088&defaultMarker=none&zoom=12&session=AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car"
+          },
+          {
+            "index": 8,
+            "distance": 0.466,
+            "narrative": "Continue on Europaplatz (L100). Go for 0.5 mi.",
+            "time": 67,
+            "direction": 1,
+            "directionName": "North",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:01:07",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.200990000000004,
+              "lng": 15.620220000000087
+            },
+            "turnType": 0,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": [
+              "L100",
+              "Europaplatz",
+              "Schie�stattring",
+              "V�lklplatz"
+            ],
+            "mapUrl": "https://www.mapquestapi.com/staticmap/v5/map?key=Cmjtd|luur2108n1,7w=o5-gz8a&size=225,160&locations=48.200990000000004,15.620220000000087|marker-9||48.207551,15.620018000000082|marker-10||�er=48.20427050000001,15.620119000000084&defaultMarker=none&zoom=14&session=AJAA5wcAALIAAAAKAAAADwAAAKMAAAB42mNYzMDAyMTAwMCekVqUapWce0xoESuQy1B40nAfx8rji7sTWN2T1gLpHCDNgAXANAqFx_OA-HubNi5i2Ngp3b3qlXvSFCC98RV2jSDwzGhj1Ecg3ZDsxMUg4DDDoZlVgJFhggATC0jWwVGIwTGEk4kBABJ0JJA5I4A-:car"
+          },
+          {
+            "index": 9,
+            "distance": 0,
+            "narrative": "Arrive at Schie�stattring (L100).",
+            "time": 0,
+            "direction": 0,
+            "directionName": "None",
+            "signs": [],
+            "maneuverNotes": [],
+            "formattedTime": "00:00:00",
+            "transportMode": "car",
+            "startPoint": {
+              "lat": 48.207551,
+              "lng": 15.620018000000082
+            },
+            "turnType": 0,
+            "attributes": 0,
+            "iconUrl": "",
+            "streets": []
+          }
+        ]
+      }
+    ],
+    "options": {
+      "routeType": "FASTEST",
+      "enhancedNarrative": false,
+      "doReverseGeocode": false,
+      "narrativeType": "text",
+      "walkingSpeed": -1,
+      "highwayEfficiency": 22,
+      "avoids": false,
+      "generalize": -1,
+      "shapeFormat": "raw",
+      "unit": "M",
+      "locale": "en_US",
+      "useTraffic": false,
+      "timeType": 0,
+      "dateType": 0,
+      "manMaps": true,
+      "sideOfStreetDisplay": true
+    },
+    "boundingBox": {
+      "ul": {
+        "lat": 48.207551,
+        "lng": 15.612280000000089
+      },
+      "lr": {
+        "lat": 48.152509999999985,
+        "lng": 16.36842
+      }
+    },
+    "name": "A1",
+    "maxRoutes": "",
+    "locations": [
+      {
+        "street": "",
+        "adminArea6": "",
+        "adminArea6Type": "Neighborhood",
+        "adminArea5": "Wien",
+        "adminArea5Type": "City",
+        "adminArea4": "Wien",
+        "adminArea4Type": "County",
+        "adminArea3": "W",
+        "adminArea3Type": "State",
+        "adminArea1": "AT",
+        "adminArea1Type": "Country",
+        "postalCode": "",
+        "geocodeQualityCode": "A5XAX",
+        "geocodeQuality": "CITY",
+        "dragPoint": false,
+        "sideOfStreet": "N",
+        "linkId": "0",
+        "unknownInput": "",
+        "type": "s",
+        "latLng": {
+          "lat": 48.20263,
+          "lng": 16.36842
+        },
+        "displayLatLng": {
+          "lat": 48.20263,
+          "lng": 16.36842
+        },
+        "mapUrl": ""
+      },
+      {
+        "street": "",
+        "adminArea6": "",
+        "adminArea6Type": "Neighborhood",
+        "adminArea5": "Sankt P�lten",
+        "adminArea5Type": "City",
+        "adminArea4": "Sankt P�lten",
+        "adminArea4Type": "County",
+        "adminArea3": "N�",
+        "adminArea3Type": "State",
+        "adminArea1": "AT",
+        "adminArea1Type": "Country",
+        "postalCode": "",
+        "geocodeQualityCode": "A5XCX",
+        "geocodeQuality": "CITY",
+        "dragPoint": false,
+        "sideOfStreet": "N",
+        "linkId": "0",
+        "unknownInput": "",
+        "type": "s",
+        "latLng": {
+          "lat": 48.20755,
+          "lng": 15.62002
+        },
+        "displayLatLng": {
+          "lat": 48.20755,
+          "lng": 15.62002
+        },
+        "mapUrl": ""
+      }
+    ],
+    "locationSequence": [
+      0,
+      1
+    ]
+  },
+  "info": {
+    "statuscode": 0,
+    "copyright": {
+      "text": "� 2022 MapQuest, Inc.",
+      "imageUrl": "http://api.mqcdn.com/res/mqlogo.gif",
+      "imageAltText": "� 2022 MapQuest, Inc."
+    },
+    "messages": []
+  }
+}
