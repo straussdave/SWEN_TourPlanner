@@ -7,6 +7,7 @@ using System.Reflection;
 using static SWEN_TourPlanner.Model.RouteResponse;
 using static System.Net.WebRequestMethods;
 using SixLabors.ImageSharp; //using this because it is compatible with windows and mac
+using SWEN_TourPlanner.Model;
 
 public class MapHandler
 {
@@ -15,35 +16,58 @@ public class MapHandler
     int imageWidth;
     int imageHeight;
 
+    /// <summary>
+    /// constuctor initializes variables and sets HttpClient base address
+    /// </summary>
     public MapHandler()
     {
         InitializeMapHandler();
         client.BaseAddress = new Uri("https://www.mapquestapi.com");
-        
-        GetRoute("pöchlarn", "stpolten");
     }
 
-    void GetRoute(string fromLocation, string toLocation)
+    /// <summary>
+    /// makes two requests to mapquest api to get the route and its image, stores the info in tour object and returns it
+    /// </summary>
+    /// <param name="fromLocation"></param>
+    /// <param name="toLocation"></param>
+    /// <returns>tour object</returns>
+    public Tour GetRoute(string fromLocation, string toLocation, string description, string name)
     {
         //make request to https://www.mapquestapi.com/directions/v2/route?key=KEY&from=FROM&to=TO&outFormat=json&ambiguities=ignore&routeType=fastest&doReverseGeocode=false&enhancedNarrative=false&avoidTimedConditions=false
         Root root = GetRouteAsync(fromLocation, toLocation).Result;
+
         //get map image from https://www.mapquestapi.com/staticmap/v5/map?key=KEY&session=SESSION
         string sessionId = root.route.sessionId;
         Image<Rgba32> mapImage = new(imageWidth, imageHeight);
         mapImage = GetRouteImageAsync(sessionId).Result;
+
         //save image to local file system
         string workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        Trace.WriteLine("working dir: " + workingDirectory);
         string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.Parent.Parent.Parent.FullName + "\\Images\\";
-        Trace.WriteLine("project dir: " + projectDirectory);
         var uniqueFilename = string.Format(@"{0}.jpg", Guid.NewGuid());
-        Trace.WriteLine("full path: " + projectDirectory + uniqueFilename);
         mapImage.SaveAsJpeg(projectDirectory + uniqueFilename);
-        //create tour object from route and route image
-        //save tour object to database
+
+        //build tour object from response data
+        Tour tour = new Tour();
+        tour.FromLocation = fromLocation;
+        tour.ToLocation = toLocation;
+        tour.TransportType = root.route.legs[0].maneuvers[0].transportMode;
+        tour.TourDistance = (int) Math.Round(root.route.distance * 1.609);
+        tour.EstimatedTime = root.route.realTime;
+        tour.RouteImage = uniqueFilename;
+        tour.Description = description;
+        tour.Name = name;
+
+        return tour;
     }
 
-    async Task<Root> GetRouteAsync(string fromLocation, string toLocation)
+    /// <summary>
+    /// get route
+    /// </summary>
+    /// <param name="fromLocation"></param>
+    /// <param name="toLocation"></param>
+    /// <returns>route task</returns>
+    private async Task<Root> GetRouteAsync(string fromLocation, string toLocation)
     {
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -56,9 +80,15 @@ public class MapHandler
         return root;
     }
 
-    string BuildRouteEndpoint(string fromLocation, string toLocation)
+    /// <summary>
+    /// concatinates the base address, key, fromlocation and to locatin to build the endpoint
+    /// </summary>
+    /// <param name="fromLocation"></param>
+    /// <param name="toLocation"></param>
+    /// <returns>string with endpoint</returns>
+    private string BuildRouteEndpoint(string fromLocation, string toLocation)
     {
-        var endpoint = client.BaseAddress.ToString() + 
+        string endpoint = client.BaseAddress.ToString() + 
             "directions/v2/route?key=" + key +
             "&from=" + fromLocation +
             "&to=" + toLocation +
@@ -66,7 +96,12 @@ public class MapHandler
         return endpoint;
     }
 
-    async Task<Image<Rgba32>> GetRouteImageAsync(string sessionId)
+    /// <summary>
+    /// uses sessionId from previous call to get the image from the api
+    /// </summary>
+    /// <param name="sessionId"></param>
+    /// <returns>image</returns>
+    private async Task<Image<Rgba32>> GetRouteImageAsync(string sessionId)
     {
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/jpeg"));
@@ -82,14 +117,21 @@ public class MapHandler
         }
     }
 
-    string BuildRouteImageEndpoint(string sessionId)
+    /// <summary>
+    /// build the endpoint for image retrieval
+    /// </summary>
+    /// <param name="sessionId"></param>
+    /// <returns></returns>
+    private string BuildRouteImageEndpoint(string sessionId)
     {
-        var endpoint = client.BaseAddress.ToString() + "staticmap/v5/map?key=" + key + "&session=" + sessionId;
-        Trace.WriteLine(endpoint);
+        string endpoint = client.BaseAddress.ToString() + "staticmap/v5/map?key=" + key + "&session=" + sessionId;
         return endpoint;
     }
 
-    void InitializeMapHandler()
+    /// <summary>
+    /// sets key, imagewidth and imageheight with values from config file
+    /// </summary>
+    private void InitializeMapHandler()
     {
         var a = Assembly.GetExecutingAssembly();
         using var stream = a.GetManifestResourceStream("SWEN_TourPlanner.appsettings.json");
@@ -102,17 +144,32 @@ public class MapHandler
         imageHeight = Int32.Parse(GetHeight(config));
     }
 
-    static string GetKey(IConfigurationRoot config)
+    /// <summary>
+    /// gets key from config file
+    /// </summary>
+    /// <param name="config"></param>
+    /// <returns>key string</returns>
+    private static string GetKey(IConfigurationRoot config)
     {
         return config.GetSection("MapHandlerSettings")["key"];
     }
 
-    static string GetWidth(IConfigurationRoot config)
+    /// <summary>
+    /// gets width from config file
+    /// </summary>
+    /// <param name="config"></param>
+    /// <returns>width string</returns>
+    private static string GetWidth(IConfigurationRoot config)
     {
         return config.GetSection("MapHandlerSettings")["width"];
     }
 
-    static string GetHeight(IConfigurationRoot config)
+    /// <summary>
+    /// gets height from config file
+    /// </summary>
+    /// <param name="config"></param>
+    /// <returns>height string</returns>
+    private static string GetHeight(IConfigurationRoot config)
     {
         return config.GetSection("MapHandlerSettings")["height"];
     }

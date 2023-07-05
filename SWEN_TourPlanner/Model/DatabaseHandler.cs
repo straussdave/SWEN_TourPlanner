@@ -25,7 +25,6 @@ public class DatabaseHandler
             _context.Tours.AddRange(
                 new Tour
                 {
-                    Id = 1,
                     Name = "Tour 1",
                     Description = "Description of Tour 1",
                     FromLocation = "Location A",
@@ -37,7 +36,6 @@ public class DatabaseHandler
                 },
                 new Tour
                 {
-                    Id = 2,
                     Name = "Tour 2",
                     Description = "Description of Tour 2",
                     FromLocation = "Location X",
@@ -49,10 +47,17 @@ public class DatabaseHandler
                 }
             // Add more sample data as needed
             );
-
             _context.SaveChanges();
         }
+        AddTour("pöchlarn", "melk", "A carride from pöchlarn to melk", "Pöchlarn-Melk");
+    }
 
+    public Tour AddTour(string fromLocation, string toLocation, string description, string name)
+    {
+        Tour tour = maphandler.GetRoute(fromLocation, toLocation, description, name);
+        _context.Add(tour);
+        _context.SaveChanges();
+        return tour;
     }
 
     /*

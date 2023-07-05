@@ -1,8 +1,13 @@
 ﻿
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
 namespace SWEN_TourPlanner.Model
 {
     public partial class Tour
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public string? Name { get; set; }
@@ -21,6 +26,6 @@ namespace SWEN_TourPlanner.Model
 
         public string? RouteImage { get; set; }
 
-        public virtual ICollection<Log> Logs { get; set; } = new List<Log>();
+        public virtual ICollection<Log>? Logs { get; set; } = new List<Log>();
     }
 }

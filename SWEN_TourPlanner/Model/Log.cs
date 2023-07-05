@@ -3,7 +3,7 @@ namespace SWEN_TourPlanner.Model
 {
     public partial class Log
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         public int? TourId { get; set; }
 
