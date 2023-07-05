@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
@@ -49,12 +50,36 @@ public class DatabaseHandler
             );
             _context.SaveChanges();
         }
-        //AddTour("pöchlarn", "melk", "A carride from pöchlarn to melk", "Pöchlarn-Melk");
-        //var date = new DateTime(2023, 7, 4);
-        //AddLog(5, date, "war eine angenehme fahrt", 1, 780, 3);
     }
 
-    public Tour AddTour(string fromLocation, string toLocation, string description, string name)
+    /// <summary>
+    /// Gets all tours from the Database
+    /// </summary>
+    /// <returns>List of all tours</returns>
+    public List<Tour> ReadTours()
+    {
+        return _context.Tours.ToList();
+    }
+
+    /// <summary>
+    /// Gets a single tour entry from the Database
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Tour object</returns>
+    public Tour ReadTour(int id)
+    {
+        return _context.Tours.Where(x => x.Id == id).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Creates new Tour in the Database
+    /// </summary>
+    /// <param name="fromLocation"></param>
+    /// <param name="toLocation"></param>
+    /// <param name="description"></param>
+    /// <param name="name"></param>
+    /// <returns>Newly created tour</returns>
+    public Tour CreateTour(string fromLocation, string toLocation, string description, string name)
     {
         Tour tour = maphandler.GetRoute(fromLocation, toLocation, description, name);
         _context.Add(tour);
@@ -62,266 +87,193 @@ public class DatabaseHandler
         return tour;
     }
 
-    public Log AddLog(int TourId, DateTime TourDate, string commment, int difficulty, int TotalTime, int Rating) 
+    /// <summary>
+    /// Updates a single Tour entry in the Database
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="fromLocation"></param>
+    /// <param name="toLocation"></param>
+    /// <param name="description"></param>
+    /// <param name="name"></param>
+    /// <returns>Updated Tour or null if Id was not found</returns>
+    public Tour UpdateTour(int id, string fromLocation, string toLocation, string description, string name)
     {
-        Log log = new Log();
-        log.TourId = TourId;
-        log.TourDate = TourDate;
-        log.Comment = commment;
-        log.Difficulty = difficulty;
-        log.TotalTime = TotalTime;
-        log.Rating = Rating;
-        _context.Add(log);
+        if (_context.Tours.Where(x => x.Id == id).FirstOrDefault() != default)
+        {
+            var tour = _context.Update(_context.Tours.Where(x => x.Id == id).FirstOrDefault());
+            Tour newTour = maphandler.GetRoute(fromLocation, toLocation, description, name);
+            tour.Entity.FromLocation = fromLocation;
+            tour.Entity.ToLocation = toLocation;
+            tour.Entity.Description = description;
+            tour.Entity.Name = name;
+            tour.Entity.TourDistance = newTour.TourDistance;
+            tour.Entity.TransportType = newTour.TransportType;
+            tour.Entity.EstimatedTime = newTour.EstimatedTime;
+            tour.Entity.RouteImage = newTour.RouteImage;
+            _context.SaveChanges();
+            return newTour;
+        }
+        return null;
+    }
+
+    /// <summary>
+    ///  Updates a single Tour entry in the Database
+    /// </summary>
+    /// <param name="oldTour"></param>
+    /// <param name="fromLocation"></param>
+    /// <param name="toLocation"></param>
+    /// <param name="description"></param>
+    /// <param name="name"></param>
+    /// <returns>Updated Tour</returns>
+    public Tour UpdateTour(Tour oldTour, string fromLocation, string toLocation, string description, string name)
+    {
+        var newTour = _context.Update(oldTour);
+        Tour tour = maphandler.GetRoute(fromLocation, toLocation, description, name);
+        newTour.Entity.FromLocation = fromLocation;
+        newTour.Entity.ToLocation = toLocation;
+        newTour.Entity.Description = description;
+        newTour.Entity.Name = name;
+        newTour.Entity.TourDistance = tour.TourDistance;
+        newTour.Entity.TransportType = tour.TransportType;
+        newTour.Entity.EstimatedTime = tour.EstimatedTime;
+        newTour.Entity.RouteImage = tour.RouteImage;
         _context.SaveChanges();
-        return log;
-    }
-
-    /*
-    /// <summary>
-    /// ORM Tour Table
-    /// </summary>
-    public DbSet<Tour> Tours { get; set; }
-
-    /// <summary>
-    /// ORM Log Table 
-    /// </summary>
-    public DbSet<Log> Logs { get; set; }
-
-    /// <summary>
-    /// Reads the connection string from config file
-    /// </summary>
-    /// <returns>returns connection string as string</returns>
-    static public string GetConnectionString() 
-    {
-        return MauiProgram.Services.GetService<IConfiguration>().GetConnectionString("cs");
+        return tour;
     }
 
     /// <summary>
-    /// This Constructor creates and populates the Tour and Log tables
+    /// Deletes a single entry in Tour table
     /// </summary>
-    public DatabaseHandler()
+    /// <param name="id"></param>
+    public void DeleteTour(int id)
     {
-        CreateTables();
-        PopulateTables();
-    }
-
-    /// <summary>
-    /// Creates Tour and Log tables
-    /// </summary>
-    private void CreateTables()
-    {
-        CreateTourTable();
-        CreateLogTable();
-    }
-
-    /// <summary>
-    /// Populates the Tour and Log tables
-    /// </summary>
-    private void PopulateTables()
-    {
-        PopulateTourTable();
-        PopulateLogTable();
-    }
-
-    /// <summary>
-    /// Creates the Tour table if it doesn't already exist
-    /// </summary>
-    private void CreateTourTable()
-    {
-        if (CheckIfExists("tour"))
+        if (_context.Tours.Where(x => x.Id == id).FirstOrDefault() != default)
         {
-            return;
-        }
-        else
-        {
-            connection.Open();
-
-            string sql = "CREATE TABLE tour (" +
-                "\r\n  id INTEGER PRIMARY KEY," +
-                "\r\n  name VARCHAR(50)," +
-                "\r\n  description VARCHAR(500)," +
-                "\r\n  from_location VARCHAR(50)," +
-                "\r\n  to_location VARCHAR(50)," +
-                "\r\n  transport_type VARCHAR(50)," +
-                "\r\n  tour_distance INTEGER," +
-                "\r\n  estimated_time INTEGER," +
-                "\r\n  route_image VARCHAR(100)" +
-                "\r\n);";
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
-            connection.Close();
-        }
-
-    }
-
-    /// <summary>
-    /// Creates the Log Table, if this table does not already exists AND the tour table does exist
-    /// </summary>
-    private void CreateLogTable()
-    {
-        if (CheckIfExists("log"))
-        {
-            return;
-        }
-        else if (!CheckIfExists("tour"))
-        {
-            return;
-        }
-        else
-        {
-            connection.Open();
-
-            string sql = "CREATE TABLE log (" +
-                "\r\n  id INTEGER PRIMARY KEY," +
-                "\r\n  tour_id INTEGER," +
-                "\r\n  tour_date TIMESTAMP," +
-                "\r\n  comment VARCHAR(500)," +
-                "\r\n  difficulty INTEGER," +
-                "\r\n  total_time INTEGER," +
-                "\r\n  rating INTEGER," +
-                "\r\n  FOREIGN KEY (tour_id) REFERENCES tour (id)" +
-                "\r\n);";
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
-            connection.Close();
+            _context.Remove(_context.Tours.Where(x => x.Id == id).FirstOrDefault());
+            _context.SaveChanges();
         }
     }
 
     /// <summary>
-    /// Populates the Tour Table with Dummy Data
+    /// Deletes a single entry in Tour table
     /// </summary>
-    private void PopulateTourTable()
+    /// <param name="tour"></param>
+    public void DeleteTour(Tour tour)
     {
-        if (CheckIfExists("tour"))
+        _context.Remove(tour);
+        _context.SaveChanges();
+    }
+
+    /// <summary>
+    /// Gets a list of all Logs in the Database
+    /// </summary>
+    /// <returns>List of Logs</returns>
+    public List<Log> ReadLogs()
+    {
+        return _context.Logs.ToList();
+    }
+
+    /// <summary>
+    /// Gets a single Log entry from the Database
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public Log ReadLog(int id)
+    {
+        return _context.Logs.Where(x => x.Id == id).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// Creates new Tour Log, if Tour with param tourId exists
+    /// </summary>
+    /// <param name="tourId"></param>
+    /// <param name="tourDate"></param>
+    /// <param name="comment"></param>
+    /// <param name="difficulty"></param>
+    /// <param name="TotalTime"></param>
+    /// <param name="Rating"></param>
+    /// <returns>Newly created Log, null if tourId did not exist</returns>
+    public Log CreateLog(int tourId, DateTime tourDate, string comment, int difficulty, int TotalTime, int Rating)
+    {
+        if (_context.Tours.Where(x => x.Id == tourId).FirstOrDefault() != default)
         {
-            if (CheckIfAlreadyPopulated("tour"))
-            {
-                return;
-            }
-            connection.Open();
+            Log log = new Log();
+            log.TourId = tourId;
+            log.TourDate = tourDate;
+            log.Comment = comment;
+            log.Difficulty = difficulty;
+            log.TotalTime = TotalTime;
+            log.Rating = Rating;
+            _context.Add(log);
+            _context.SaveChanges();
+            return log;
+        }
+        return null;
+    }
 
-            string sql = "INSERT INTO tour " +
-                "(id, name, description, from_location, to_location, transport_type, tour_distance, estimated_time, route_image)" +
-                "\r\nVALUES" +
-                "\r\n  (1, 'Exploring Nature', 'Embark on a journey to explore the wonders of nature', 'City A', 'City B', 'Hiking', 10, 120, 'route_image_1.jpg')," +
-                "\r\n  (2, 'Historical Tour', 'Discover the rich history of the region with this guided tour', 'City C', 'City D', 'Bus', 50, 180, 'route_image_2.jpg')," +
-                "\r\n  (3, 'Coastal Adventure', 'Experience the thrill of water sports along the beautiful coastline', 'City E', 'City F', 'Boat', 25, 90, 'route_image_3.jpg');";
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
-            connection.Close();
+    /// <summary>
+    /// Updates single Tour Log entry
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="tourDate"></param>
+    /// <param name="comment"></param>
+    /// <param name="difficulty"></param>
+    /// <param name="totalTime"></param>
+    /// <param name="rating"></param>
+    public void UpdateLog(int id, DateTime tourDate, string comment, int difficulty, int totalTime, int rating)
+    {
+        if (_context.Logs.Where(x => x.Id == id).FirstOrDefault() != default)
+        {
+            var log = _context.Update(_context.Logs.Where(x => x.Id == id).FirstOrDefault());
+            log.Entity.TourDate = tourDate;
+            log.Entity.Comment = comment;
+            log.Entity.Difficulty = difficulty;
+            log.Entity.TotalTime = totalTime;
+            log.Entity.Rating = rating;
+            _context.SaveChanges();
         }
     }
 
     /// <summary>
-    /// Populates the Log Table with Dummy Data
+    /// Updates single Tour Log entry
     /// </summary>
-    private void PopulateLogTable()
+    /// <param name="oldLog"></param>
+    /// <param name="tourDate"></param>
+    /// <param name="comment"></param>
+    /// <param name="difficulty"></param>
+    /// <param name="totalTime"></param>
+    /// <param name="rating"></param>
+    public void UpdateLog(Log oldLog, DateTime tourDate, string comment, int difficulty, int totalTime, int rating)
     {
-        if (CheckIfExists("log"))
+        var log = _context.Update(oldLog);
+        log.Entity.TourDate = tourDate;
+        log.Entity.Comment = comment;
+        log.Entity.Difficulty = difficulty;
+        log.Entity.TotalTime = totalTime;
+        log.Entity.Rating = rating;
+        _context.SaveChanges();
+    }
+
+    /// <summary>
+    /// Deletes a Log from the Database
+    /// </summary>
+    /// <param name="id"></param>
+    public void DeleteLog(int id)
+    {
+        if (_context.Logs.Where(x => x.Id == id).FirstOrDefault() != default)
         {
-            if (CheckIfAlreadyPopulated("log"))
-            {
-                return;
-            }
-            connection.Open();
-
-            string sql = "INSERT INTO log" +
-                "(id, tour_id, tour_date, comment, difficulty, total_time, rating)" +
-                "\r\nVALUES\r\n  (1, 1, '2023-06-01 09:00:00', 'The hike was breathtaking. Amazing views!', 3, 120, 4)," +
-                "\r\n  (2, 1, '2023-06-05 14:30:00', 'The trail was challenging but totally worth it.', 4, 150, 5)," +
-                "\r\n  (3, 2, '2023-06-10 10:15:00', 'Fascinating insights into the historical landmarks.', 2, 90, 4)," +
-                "\r\n  (4, 2, '2023-06-12 11:30:00', 'The tour guide was extremely knowledgeable.', 3, 120, 4)," +
-                "\r\n  (5, 3, '2023-06-15 14:00:00', 'Had a great time kayaking along the coastline!', 2, 75, 5);";
-
-            using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-            {
-                command.ExecuteNonQuery();
-            }
-
-            connection.Close();
+            _context.Remove(_context.Logs.Where(x => x.Id == id).FirstOrDefault());
+            _context.SaveChanges();
         }
     }
 
     /// <summary>
-    /// Checks if a given table exists
+    /// Deletes a Log from the Database
     /// </summary>
-    /// <param name="tableName"></param>
-    /// <returns>true if the table exists, false if the table does not exist</returns>
-    private bool CheckIfExists(string tableName)
+    /// <param name="log"></param>
+    public void DeleteLog(Log log)
     {
-        connection.Open();
-
-        string sql = "SELECT *\r\nFROM pg_catalog.pg_tables\r\nWHERE tablename = @tableName;";
-
-        using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-        {
-            command.Parameters.AddWithValue("tableName", tableName);
-            using (NpgsqlDataReader reader = command.ExecuteReader())
-            {
-                if (reader.Read())
-                {
-                    connection.Close();
-                    return true;
-                }
-            }
-        }
-
-        connection.Close();
-        return false;
+        _context.Remove(log);
+        _context.SaveChanges();
     }
-
-    /// <summary>
-    /// Checks if a given table is populated
-    /// </summary>
-    /// <param name="tableName"></param>
-    /// <returns>true if the table is populated with any data, false if it isn't</returns>
-    private bool CheckIfAlreadyPopulated(string tableName)
-    {
-        tableName = SanitizeString(tableName);
-        connection.Open();
-
-        string sql = "SELECT COUNT(*) FROM " + tableName + ";"; //I am aware that it's bad practice to include the parameter as string literal, but I'm quite sure that it is save in this case because the values don't come from user input, but to at least have one safety net I used the CleanString function
-
-        using (NpgsqlCommand command = new NpgsqlCommand(sql, connection))
-        {
-            command.Parameters.AddWithValue("tableName", tableName);
-            int rowCount = Convert.ToInt32(command.ExecuteScalar());
-
-            if (rowCount > 0)
-            {
-                connection.Close();
-                return true;
-            }
-            else
-            {
-                connection.Close();
-                return false;
-            }
-        }
-
-    }
-
-    /// <summary>
-    /// sanitizes a string using Regex (by MSDN http://msdn.microsoft.com/en-us/library/844skk0h(v=vs.71).aspx)
-    /// </summary>
-    /// <param name="strIn"></param>
-    /// <returns>sanitized string</returns>
-    public static string SanitizeString(string strIn)
-    {
-        // Replace invalid characters with empty strings.
-        return Regex.Replace(strIn, @"[^\w\.@-]", "");
-    } 
-    */
 }
