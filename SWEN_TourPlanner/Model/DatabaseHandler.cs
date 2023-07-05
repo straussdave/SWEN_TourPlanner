@@ -49,7 +49,9 @@ public class DatabaseHandler
             );
             _context.SaveChanges();
         }
-        AddTour("pöchlarn", "melk", "A carride from pöchlarn to melk", "Pöchlarn-Melk");
+        //AddTour("pöchlarn", "melk", "A carride from pöchlarn to melk", "Pöchlarn-Melk");
+        //var date = new DateTime(2023, 7, 4);
+        //AddLog(5, date, "war eine angenehme fahrt", 1, 780, 3);
     }
 
     public Tour AddTour(string fromLocation, string toLocation, string description, string name)
@@ -58,6 +60,20 @@ public class DatabaseHandler
         _context.Add(tour);
         _context.SaveChanges();
         return tour;
+    }
+
+    public Log AddLog(int TourId, DateTime TourDate, string commment, int difficulty, int TotalTime, int Rating) 
+    {
+        Log log = new Log();
+        log.TourId = TourId;
+        log.TourDate = TourDate;
+        log.Comment = commment;
+        log.Difficulty = difficulty;
+        log.TotalTime = TotalTime;
+        log.Rating = Rating;
+        _context.Add(log);
+        _context.SaveChanges();
+        return log;
     }
 
     /*

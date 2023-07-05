@@ -33,36 +33,15 @@ public class MapHandler
     /// <returns>tour object</returns>
     public Tour GetRoute(string fromLocation, string toLocation, string description, string name)
     {
-        //make request to https://www.mapquestapi.com/directions/v2/route?key=KEY&from=FROM&to=TO&outFormat=json&ambiguities=ignore&routeType=fastest&doReverseGeocode=false&enhancedNarrative=false&avoidTimedConditions=false
         Root root = GetRouteAsync(fromLocation, toLocation).Result;
-
-        //get map image from https://www.mapquestapi.com/staticmap/v5/map?key=KEY&session=SESSION
-        string sessionId = root.route.sessionId;
         Image<Rgba32> mapImage = new(imageWidth, imageHeight);
-        mapImage = GetRouteImageAsync(sessionId).Result;
-
-        //save image to local file system
-        string workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.Parent.Parent.Parent.FullName + "\\Images\\";
-        var uniqueFilename = string.Format(@"{0}.jpg", Guid.NewGuid());
-        mapImage.SaveAsJpeg(projectDirectory + uniqueFilename);
-
-        //build tour object from response data
-        Tour tour = new Tour();
-        tour.FromLocation = fromLocation;
-        tour.ToLocation = toLocation;
-        tour.TransportType = root.route.legs[0].maneuvers[0].transportMode;
-        tour.TourDistance = (int) Math.Round(root.route.distance * 1.609);
-        tour.EstimatedTime = root.route.realTime;
-        tour.RouteImage = uniqueFilename;
-        tour.Description = description;
-        tour.Name = name;
-
-        return tour;
+        mapImage = GetRouteImageAsync(root.route.sessionId).Result;
+        string uniqueFilename = SaveToFile(mapImage);
+        return BuildNewTour(fromLocation, toLocation, root, uniqueFilename, description, name);
     }
 
     /// <summary>
-    /// get route
+    /// get route from API https://www.mapquestapi.com/directions/v2/
     /// </summary>
     /// <param name="fromLocation"></param>
     /// <param name="toLocation"></param>
@@ -97,7 +76,7 @@ public class MapHandler
     }
 
     /// <summary>
-    /// uses sessionId from previous call to get the image from the api
+    /// uses sessionId from route call to get the image from the api https://www.mapquestapi.com/staticmap/v5/
     /// </summary>
     /// <param name="sessionId"></param>
     /// <returns>image</returns>
@@ -106,7 +85,7 @@ public class MapHandler
         client.DefaultRequestHeaders.Accept.Clear();
         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/jpeg"));
         HttpResponseMessage response = client.GetAsync(BuildRouteImageEndpoint(sessionId)).Result;
-        response.EnsureSuccessStatusCode(); // Ensure the response is successful
+        response.EnsureSuccessStatusCode();
 
         byte[] imageBytes = await response.Content.ReadAsByteArrayAsync();
 
@@ -124,7 +103,7 @@ public class MapHandler
     /// <returns></returns>
     private string BuildRouteImageEndpoint(string sessionId)
     {
-        string endpoint = client.BaseAddress.ToString() + "staticmap/v5/map?key=" + key + "&session=" + sessionId;
+        string endpoint = client.BaseAddress.ToString() + "staticmap/v5/map?key=" + key + "&session=" + sessionId + "&size=" + imageWidth + "," + imageHeight;
         return endpoint;
     }
 
@@ -172,5 +151,43 @@ public class MapHandler
     private static string GetHeight(IConfigurationRoot config)
     {
         return config.GetSection("MapHandlerSettings")["height"];
+    }
+
+    /// <summary>
+    /// build tour object from  parameters
+    /// </summary>
+    /// <param name="fromLocation"></param>
+    /// <param name="toLocation"></param>
+    /// <param name="root"></param>
+    /// <param name="uniqueFilename"></param>
+    /// <param name="description"></param>
+    /// <param name="name"></param>
+    /// <returns>newly built tour object</returns>
+    private Tour BuildNewTour(string fromLocation, string toLocation, Root root, string uniqueFilename, string description, string name)
+    {
+        Tour tour = new Tour();
+        tour.FromLocation = fromLocation;
+        tour.ToLocation = toLocation;
+        tour.TransportType = root.route.legs[0].maneuvers[0].transportMode;
+        tour.TourDistance = (int)Math.Round(root.route.distance * 1.609);
+        tour.EstimatedTime = root.route.realTime;
+        tour.RouteImage = uniqueFilename;
+        tour.Description = description;
+        tour.Name = name;
+        return tour;
+    }
+
+    /// <summary>
+    /// gets the path to Images folder, creates unique ID for the image, saves it to  the file system
+    /// </summary>
+    /// <param name="mapImage"></param>
+    /// <returns>uniqueFilename</returns>
+    private string SaveToFile(Image<Rgba32> mapImage)
+    {
+        string workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        string projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.Parent.Parent.Parent.FullName + "\\Images\\";
+        var uniqueFilename = string.Format(@"{0}.jpg", Guid.NewGuid());
+        mapImage.SaveAsJpeg(projectDirectory + uniqueFilename);
+        return uniqueFilename;
     }
 }

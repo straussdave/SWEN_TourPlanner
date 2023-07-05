@@ -39,7 +39,7 @@ namespace SWEN_TourPlanner.Model
                 entity.ToTable("log");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
+                    .UseIdentityAlwaysColumn()
                     .HasColumnName("id");
                 entity.Property(e => e.Comment)
                     .HasMaxLength(500)
