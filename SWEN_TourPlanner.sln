@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SWEN_TourPlanner", "SWEN_TourPlanner\SWEN_TourPlanner.csproj", "{0A4FFF33-C3AB-4485-BF71-BB67E6ABA1C6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourPlannerTests", "TourPlannerTests\TourPlannerTests.csproj", "{6ECCA4D8-F12A-4703-8A44-92F86DBD04B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{0A4FFF33-C3AB-4485-BF71-BB67E6ABA1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A4FFF33-C3AB-4485-BF71-BB67E6ABA1C6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0A4FFF33-C3AB-4485-BF71-BB67E6ABA1C6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6ECCA4D8-F12A-4703-8A44-92F86DBD04B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ECCA4D8-F12A-4703-8A44-92F86DBD04B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ECCA4D8-F12A-4703-8A44-92F86DBD04B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ECCA4D8-F12A-4703-8A44-92F86DBD04B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

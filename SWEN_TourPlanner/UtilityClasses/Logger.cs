@@ -10,16 +10,16 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SWEN_TourPlanner
+namespace SWEN_TourPlanner.Utility
 {
     public class Logger
     {
         public ILog log;
 
-        public Logger() 
+        public Logger()
         {
             var a = Assembly.GetExecutingAssembly();
-            
+
             var patternLayout = new PatternLayout();
             patternLayout.ConversionPattern = "%date %level %logger - %message%newline";
             patternLayout.ActivateOptions();

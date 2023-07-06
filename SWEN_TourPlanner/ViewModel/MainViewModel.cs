@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using log4net.Appender;
 using SWEN_TourPlanner.Model;
+using SWEN_TourPlanner.Utility;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -12,6 +13,7 @@ namespace SWEN_TourPlanner.ViewModel
     public partial class MainViewModel : ObservableObject
     {
         Logger logger = new();
+        ReportGenerator reportGenerator = new();
 
         int counter;
         [ObservableProperty] //this auto generates code in Dependencies/net7.0-windows/CommunityToolkin.Mvvm.SourceGenerators/CoomunityToolkit.MvvmSourceGenerators.ObservablePropertyGenerator
@@ -29,6 +31,7 @@ namespace SWEN_TourPlanner.ViewModel
         public MainViewModel()
         {
             logger.log.Debug("MainViewModel created");
+            reportGenerator.GenerateReport(handler.ReadTour(28));
         }
     }
 }

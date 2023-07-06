@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace SWEN_TourPlanner.Model
+namespace SWEN_TourPlanner.Utility
 {
     internal class InputValidator
     {
