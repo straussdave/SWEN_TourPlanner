@@ -23,31 +23,10 @@ public class DatabaseHandler
 
         if (!_context.Tours.Any())
         {
-            _context.Tours.AddRange(
-                new Tour
-                {
-                    Name = "Tour 1",
-                    Description = "Description of Tour 1",
-                    FromLocation = "Location A",
-                    ToLocation = "Location B",
-                    TransportType = "Car",
-                    TourDistance = 100,
-                    EstimatedTime = 120,
-                    RouteImage = "route_1.jpg"
-                },
-                new Tour
-                {
-                    Name = "Tour 2",
-                    Description = "Description of Tour 2",
-                    FromLocation = "Location X",
-                    ToLocation = "Location Y",
-                    TransportType = "Bike",
-                    TourDistance = 80,
-                    EstimatedTime = 90,
-                    RouteImage = "route_2.jpg"
-                }
-            // Add more sample data as needed
-            );
+            Tour tour1 = maphandler.GetRoute("Pöchlarn", "Vienna", "A carride from Pöchlarn to Vienna", "Pöchlarn-Vienna");
+            Tour tour2 = maphandler.GetRoute("New York", "Miami", "A carride from New York to Miami", "New York-Miami");
+            Tour tour3 = maphandler.GetRoute("Hamburg", "Berlin", "A carride from Hamburg to Berlin", "Hamburg-Berlin");
+            _context.Tours.AddRange(tour1, tour2, tour3);
             _context.SaveChanges();
         }
     }
@@ -149,6 +128,8 @@ public class DatabaseHandler
     {
         if (_context.Tours.Where(x => x.Id == id).FirstOrDefault() != default)
         {
+            Tour tour = ReadTour(id);
+            DeleteImage(tour.RouteImage);
             _context.Remove(_context.Tours.Where(x => x.Id == id).FirstOrDefault());
             _context.SaveChanges();
         }
@@ -160,8 +141,20 @@ public class DatabaseHandler
     /// <param name="tour"></param>
     public void DeleteTour(Tour tour)
     {
+        DeleteImage(tour.RouteImage);
         _context.Remove(tour);
         _context.SaveChanges();
+    }
+
+    /// <summary>
+    /// Deletes the image belonging to a tour
+    /// </summary>
+    /// <param name="fileName"></param>
+    private void DeleteImage(string fileName)
+    {
+        string workingDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        string path = Directory.GetParent(workingDirectory).Parent.Parent.Parent.Parent.Parent.FullName + "\\Images\\" + fileName;
+        File.Delete(path);
     }
 
     /// <summary>
