@@ -23,11 +23,7 @@ public class DatabaseHandler
 
         if (!_context.Tours.Any())
         {
-            Tour tour1 = maphandler.GetRoute("Pöchlarn", "Vienna", "A carride from Pöchlarn to Vienna", "Pöchlarn-Vienna");
-            Tour tour2 = maphandler.GetRoute("New York", "Miami", "A carride from New York to Miami", "New York-Miami");
-            Tour tour3 = maphandler.GetRoute("Hamburg", "Berlin", "A carride from Hamburg to Berlin", "Hamburg-Berlin");
-            _context.Tours.AddRange(tour1, tour2, tour3);
-            _context.SaveChanges();
+            PopulateDatabase();
         }
     }
 
@@ -268,5 +264,67 @@ public class DatabaseHandler
     {
         _context.Remove(log);
         _context.SaveChanges();
+    }
+
+    /// <summary>
+    /// Populates the Databse with realistic dummy data
+    /// </summary>
+    private void PopulateDatabase()
+    {
+        Tour tour1 = CreateTour("Pöchlarn", "Vienna", "A carride from Pöchlarn to Vienna", "Pöchlarn-Vienna");
+        Tour tour2 = CreateTour("New York", "Miami", "A carride from New York to Miami", "New York-Miami");
+        Tour tour3 = CreateTour("Hamburg", "Berlin", "A carride from Hamburg to Berlin", "Hamburg-Berlin");
+
+        CreateLog(
+            tourId: tour1.Id,
+            tourDate: new DateTime(2023, 7, 4),
+            comment: "The weather was perfect for a scenic drive from Pöchlarn to Vienna. We enjoyed beautiful landscapes and historic landmarks along the way.",
+            difficulty: 2,
+            TotalTime: 3600,
+            Rating: 4
+            );
+        CreateLog(
+            tourId: tour1.Id,
+            tourDate: new DateTime(2023, 8, 12),
+            comment: "We decided to take a detour and explore the Wachau Valley. The vineyards and the Danube River were simply breathtaking.",
+            difficulty: 2,
+            TotalTime: 5000,
+            Rating: 5
+            );
+
+        CreateLog(
+            tourId: tour2.Id,
+            tourDate: new DateTime(2023, 6, 21),
+            comment: "Our road trip from New York to Miami was filled with excitement and adventure. We encountered diverse landscapes, vibrant cities, and stunning coastal views.",
+            difficulty: 3,
+            TotalTime: 43200,
+            Rating: 5
+            );
+        CreateLog(
+            tourId: tour2.Id,
+            tourDate: new DateTime(2023, 7, 2),
+            comment: "We made a pit stop at the Kennedy Space Center and witnessed a rocket launch. It was an unforgettable experience!",
+            difficulty: 3,
+            TotalTime: 50000,
+            Rating: 5
+            );
+
+
+        CreateLog(
+            tourId: tour3.Id,
+            tourDate: new DateTime(2023, 9, 10),
+            comment: "The journey from Hamburg to Berlin was smooth and enjoyable. We explored picturesque countryside and experienced the vibrant atmosphere of Berlin.",
+            difficulty: 1,
+            TotalTime: 14400,
+            Rating: 4
+            );
+        CreateLog(
+            tourId: tour3.Id,
+            tourDate: new DateTime(2023, 10, 5),
+            comment: "We took a scenic route along the Baltic Sea coastline and enjoyed stunning views of the beaches and charming seaside towns.",
+            difficulty: 1,
+            TotalTime: 16000,
+            Rating: 4
+            );
     }
 }
